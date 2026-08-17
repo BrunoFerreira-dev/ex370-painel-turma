@@ -18,12 +18,13 @@ router.get("/", (req, res) => {
 });
 
 // POST /enquete/voto — corpo { opcao }: incrementa o voto daquela opção.
+//   `opcao` é um TEXTO (string): o NOME de uma opção existente (ex.: "Presencial").
 router.post("/voto", (req, res) => {
   // TODO (Tarefa C):
-  //  1. Leia `opcao` de req.body.
-  //  2. Procure a opção pelo nome em `opcoes`.
+  //  1. Leia `opcao` (texto) de req.body.
+  //  2. Procure a opção cujo `nome` seja igual a esse texto em `opcoes`.
   //  3. Se não existir, responda 400.
-  //  4. Se existir, incremente `votos` e responda 200.
+  //  4. Se existir, incremente `votos` (número) e responda 200.
   res.status(501).json({ erro: "não implementado" });
 });
 

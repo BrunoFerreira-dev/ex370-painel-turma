@@ -13,10 +13,10 @@ router.get("/", (req, res) => {
   res.status(501).json({ erro: "não implementado" });
 });
 
-// POST /avisos — cria um aviso { titulo, mensagem }.
+// POST /avisos — cria um aviso { titulo, mensagem } (ambos TEXTO/string).
 router.post("/", (req, res) => {
   // TODO (Tarefa A):
-  //  1. Leia titulo e mensagem de req.body.
+  //  1. Leia titulo (texto) e mensagem (texto) de req.body.
   //  2. Se faltar titulo OU mensagem, responda 400.
   //  3. Crie { id: proximoId++, titulo, mensagem }, adicione em `avisos`
   //     e responda 201 com o aviso criado.

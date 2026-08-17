@@ -13,10 +13,10 @@ router.get("/", (req, res) => {
   res.status(501).json({ erro: "não implementado" });
 });
 
-// POST /links — cria um link { titulo, url }.
+// POST /links — cria um link { titulo, url } (ambos TEXTO/string).
 router.post("/", (req, res) => {
   // TODO (Tarefa B):
-  //  1. Leia titulo e url de req.body.
+  //  1. Leia titulo (texto) e url (texto) de req.body.
   //  2. Se faltar titulo OU url, responda 400.
   //  3. Crie { id: proximoId++, titulo, url }, adicione em `links`
   //     e responda 201 com o link criado.

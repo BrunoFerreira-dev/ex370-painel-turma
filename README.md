@@ -4,6 +4,8 @@ Uma API REST enxuta para o **painel de uma turma**, feita para caber numa **jane
 
 O template já vem pronto com o servidor Express, o roteamento dos três módulos, a rota `GET /health` e um armazenamento **em memória** (sem banco de dados). Cada integrante só preenche o seu arquivo de rota em `src/rotas/`.
 
+Todos os corpos de requisição e respostas são **JSON** (`Content-Type: application/json`).
+
 ## Como rodar
 
 ```bash
@@ -15,16 +17,40 @@ npm start
 ## As três tarefas paralelas (uma por pessoa)
 
 ### Tarefa A — Avisos · `src/rotas/avisos.js`
-- `GET /avisos` — lista todos os avisos
-- `POST /avisos` — cria `{ titulo, mensagem }`; responde **201** com o aviso (com `id`); **400** se faltar `titulo` ou `mensagem`
+- `GET /avisos` — lista todos os avisos (**array** de objetos aviso)
+- `POST /avisos` — cria um aviso. Corpo:
+  - `titulo` — **texto** (string), obrigatório
+  - `mensagem` — **texto** (string), obrigatório
+  - Responde **201** com o aviso `{ id: número, titulo: texto, mensagem: texto }`
+  - Responde **400** se faltar `titulo` ou `mensagem`
 
 ### Tarefa B — Links úteis · `src/rotas/links.js`
-- `GET /links` — lista todos os links
-- `POST /links` — cria `{ titulo, url }`; responde **201** com o link (com `id`); **400** se faltar `titulo` ou `url`
+- `GET /links` — lista todos os links (**array** de objetos link)
+- `POST /links` — cria um link. Corpo:
+  - `titulo` — **texto** (string), obrigatório
+  - `url` — **texto** (string), obrigatório
+  - Responde **201** com o link `{ id: número, titulo: texto, url: texto }`
+  - Responde **400** se faltar `titulo` ou `url`
 
 ### Tarefa C — Enquete rápida · `src/rotas/enquete.js`
-- `GET /enquete` — retorna as opções com a contagem: `{ opcoes: [{ nome, votos }] }`
-- `POST /enquete/voto` — corpo `{ opcao }`; incrementa o voto e responde **200**; **400** se a opção não existir
+- `GET /enquete` — retorna as opções com a contagem:
+  - `{ opcoes: [ { nome: texto, votos: número inteiro } ] }`
+- `POST /enquete/voto` — registra um voto. Corpo:
+  - `opcao` — **texto** (string): o **nome** de uma opção existente (ex.: `"Presencial"`)
+  - Incrementa `votos` (número inteiro) daquela opção e responde **200**
+  - Responde **400** se a opção (o texto enviado) não existir
+
+## Tipos dos dados (resumo)
+
+| Campo | Tipo | Onde |
+|---|---|---|
+| `id` | número (inteiro) | gerado pelo servidor nas respostas de Avisos e Links |
+| `titulo` | texto (string) | corpo de `POST /avisos` e `POST /links` |
+| `mensagem` | texto (string) | corpo de `POST /avisos` |
+| `url` | texto (string) | corpo de `POST /links` |
+| `nome` | texto (string) | nome da opção da enquete |
+| `votos` | número (inteiro) | contagem de votos de cada opção |
+| `opcao` | texto (string) | corpo de `POST /enquete/voto` — o nome de uma opção existente |
 
 ## Cronograma sugerido (60 min)
 - **0–5 min** — juntos: clonar, `npm install`, `npm start`, conferir `GET /health`; cada um escolhe A, B ou C.
