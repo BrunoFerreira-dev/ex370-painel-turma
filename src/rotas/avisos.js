@@ -10,17 +10,32 @@ let proximoId = 1;
 // GET /avisos — lista todos os avisos.
 router.get("/", (req, res) => {
   // TODO (Tarefa A): responda com status 200 e o array `avisos`.
-  res.status(501).json({ erro: "não implementado" });
+  res.status(200).json(avisos);
 });
 
 // POST /avisos — cria um aviso { titulo, mensagem } (ambos TEXTO/string).
 router.post("/", (req, res) => {
+  //let titulo = req.body.titulo;
+  //let mensagem = req.body.mensagem;
+
+  let {titulo, mensagem} = req.body;
+
+  if(!titulo || !mensagem){
+    return res.status(400).json({message:"Título e mensagem são obrigatórios."});
+  }
+
+  newAviso = {id: proximoId++,
+              titulo, 
+              mensagem
+  }
+
+  avisos.push(newAviso);
+  res.status(201).json({message:"Aviso criado com sucesso!"});
   // TODO (Tarefa A):
   //  1. Leia titulo (texto) e mensagem (texto) de req.body.
   //  2. Se faltar titulo OU mensagem, responda 400.
   //  3. Crie { id: proximoId++, titulo, mensagem }, adicione em `avisos`
   //     e responda 201 com o aviso criado.
-  res.status(501).json({ erro: "não implementado" });
 });
 
 module.exports = router;
