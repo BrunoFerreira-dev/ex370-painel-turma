@@ -9,7 +9,7 @@ let proximoId = 1;
 // GET /links — lista todos os links.
 router.get("/links", (req, res) => {
   // TODO (Tarefa B): responda com status 200 e o array `links`.
-  res.status(201).json(links);
+  res.status(200).json(links);
 });
 
 // POST /links — cria um link { titulo, url } (ambos TEXTO/string).
@@ -21,6 +21,7 @@ router.post("/links", (req, res) => {
   if (titulo === undefined || url === undefined) {
     return res.status(400).send("falta titulo ou url");
   }
+  res.status(201)
 
   // 3. Crie { id: proximoId++, titulo, url }, adicione em `links` e responda 201 com o link criado.
   const linkCriado = { id: proximoId++, titulo, url };
