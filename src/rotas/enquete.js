@@ -1,4 +1,5 @@
 const express = require("express");
+const app = require("../server");
 
 const router = express.Router();
 
@@ -11,21 +12,19 @@ const opcoes = [
   { nome: "Híbrido", votos: 0 },
 ];
 
-// GET /enquete — retorna as opções com a contagem de votos.
-router.get("/", (req, res) => {
-  // TODO (Tarefa C): responda com status 200 e o objeto { opcoes }.
-  res.status(501).json({ erro: "não implementado" });
+router.get("/enquete", (req, res) => {
+  res.status(200).send(opcoes)
 });
-
-// POST /enquete/voto — corpo { opcao }: incrementa o voto daquela opção.
-//   `opcao` é um TEXTO (string): o NOME de uma opção existente (ex.: "Presencial").
 router.post("/voto", (req, res) => {
-  // TODO (Tarefa C):
-  //  1. Leia `opcao` (texto) de req.body.
-  //  2. Procure a opção cujo `nome` seja igual a esse texto em `opcoes`.
-  //  3. Se não existir, responda 400.
-  //  4. Se existir, incremente `votos` (número) e responda 200.
-  res.status(501).json({ erro: "não implementado" });
+  const {opcao} = req.body
+  const opcaoEncontrada = opcoes.find(opcoes => opcoes.nome === opcao)
+  if (opcaoEncontrada == undefined){
+    res.status(400).send("Não encontrado")
+  }
+  else {
+    opcaoEncontrada.votos +=1
+    res.status(200).send("Votou")
+  }
 });
 
 module.exports = router;
